@@ -1,0 +1,6 @@
+export { default as AnswersList } from './AnswersList'
+
+//omponentsフォルダに複数のコンポーネントがある状態のとき、エントリポイントとして作った
+//index.jsxを参照すれば、どのコンポーネントでもインポートできる
+
+export { default as Answer } from './Answer'
