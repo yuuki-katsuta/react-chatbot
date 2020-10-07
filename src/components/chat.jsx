@@ -11,7 +11,7 @@ const Chat = (props) => {
   //これで、質問（左表示）、回答（右表示）かを分けている
   const isQuestion = (props.type === 'question')
   const classes = isQuestion ? 'p-chat__row' : 'p-chat__reverse'
-  //isQuestionがtruenaなら、p-chat__rowを適用
+  //isQuestionがtrueなら、p-chat__rowを適用
   //p-chat__rowは左から表示　p-chat__reverseは右表示
 
   return (
