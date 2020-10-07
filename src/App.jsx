@@ -36,15 +36,22 @@ class App extends React.Component {
     })
 
     this.setState({
-      //次のクエスチョンを表示したら、その質問に対する回答を表示したい
+
+      //回答コンポーネントに表示するデータとチャットコンポーネントに表示するデータをセットする
+
+      //回答コンポーネントに表示するデータ
       answers: this.state.dataset[nextQuestionId].answers,  //nextQuestionIdは最初はinit
       //ここでanswerの配列には、{ content: "仕事を依頼したい", nextId: "job_offer" },のようなデータが入る
 
-      //chats更新
+      //チャットコンポーネントに表示するデータ
       chats: chats,
-      currentId: nextQuestionId　//回答したら次の質問のIDにしたい
+      //chatsは、[{key: value},{key: value}]
+      //chatは、{text:string, type:string}の連想配列
+
+      currentId: nextQuestionId　//現在の質問ID
     })
     console.log(chats)
+    console.log(this.state.dataset[nextQuestionId].answers)
   }
 
   //回答したときの処理(回答がchatに追加される)
@@ -66,6 +73,7 @@ class App extends React.Component {
         this.setState({
           chats: chats
           //this.state.chats.push(chat)では直接chatを変更しているのでダメ
+          //ここでstate が変更されたのでChatコンポーネントがrenderされる
         })
 
         //回答したら次の質問を表示する
