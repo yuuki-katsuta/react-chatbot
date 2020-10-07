@@ -61,6 +61,15 @@ class App extends React.Component {
       case (nextQuestionId === 'init'):
         this.displayNextQuestion(nextQuestionId)
         break;
+
+      case (/https:*/.test(nextQuestionId))://nextQuestionIdがhttpsで始まる場合の処理
+        //ここではurlのサイトを別タブで表示したい
+        const a = document.createElement('a')
+        a.href = nextQuestionId
+        a.target = '_blank' //別タブ
+        a.click()//HTMLElement.click() メソッドは、要素のマウスクリックをシミュレートします。
+        break
+
       default:
         //QuestionIdがinitじゃないときは、受け取った回答をchatのtextに入れて配列を作る
         const chat = {
@@ -77,7 +86,9 @@ class App extends React.Component {
         })
 
         //回答したら次の質問を表示する
-        this.displayNextQuestion(nextQuestionId)
+        setTimeout(() => {
+          this.displayNextQuestion(nextQuestionId)
+        }, 1000);
         break
     }
   }
@@ -87,6 +98,13 @@ class App extends React.Component {
     this.selectAnswer(initAnswer, this.state.currentId)
     //this.state.currentIdは初期状態でinit
     //マウント時（初期状態）では回答していないため、selectedAnswerは空白
+  }
+
+  componentDidUpdate() {
+    const scrollArea = document.getElementById('scroll-area')
+    if (scrollArea) {
+      scrollArea.scrollTop = scrollArea.scrollHeight
+    }
   }
 
   render() {
