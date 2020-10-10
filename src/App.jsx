@@ -4,6 +4,7 @@ import defaultDataset from './dataset'
 
 //エントリポイントからimport(名前付きexportに対するimport)
 import { AnswersList, Chats } from './components/index'
+import FormDialog from './components/Forms/FormDialog';
 
 class App extends React.Component {
 
@@ -24,7 +25,10 @@ class App extends React.Component {
       open: false,　//問い合わせモーダルの開閉を管理
     }
     this.selectAnswer = this.selectAnswer.bind(this)
+    this.handleClose = this.handleClose.bind(this)
+    this.handleClickOpen = this.handleClickOpen.bind(this)
   }
+
 
   //次のクエスチョンを表示する
   displayNextQuestion = (nextQuestionId) => {
@@ -62,6 +66,11 @@ class App extends React.Component {
         this.displayNextQuestion(nextQuestionId)
         break;
 
+      case (nextQuestionId === 'contact'):
+        //お問い合わせモーダルを開く
+        this.handleClickOpen()
+        break
+
       case (/https:*/.test(nextQuestionId))://nextQuestionIdがhttpsで始まる場合の処理
         //ここではurlのサイトを別タブで表示したい
         const a = document.createElement('a')
@@ -93,6 +102,18 @@ class App extends React.Component {
     }
   }
 
+  handleClickOpen = () => {
+    this.setState({
+      open: true
+    })
+  }
+
+  handleClose = () => {
+    this.setState({
+      open: false
+    })
+  }
+
   componentDidMount() {
     const initAnswer = ""
     this.selectAnswer(initAnswer, this.state.currentId)
@@ -113,6 +134,7 @@ class App extends React.Component {
         <div className="c-box">
           <Chats chats={this.state.chats} />
           <AnswersList answers={this.state.answers} select={this.selectAnswer} />
+          <FormDialog open={this.state.open} handleClose={this.handleClose} />
         </div>
       </section >
     );
@@ -121,10 +143,10 @@ class App extends React.Component {
   //answers={this.state.answers}でthis.state.answersを渡したから。
   /*
   [
-    { content: "仕事を依頼したい", nextId: "job_offer" },
-    { content: "エンジニアのキャリアについて相談したい", nextId: "consultant" },
-    { content: "学習コミュニティについて知りたい", nextId: "community" },
-    { content: "お付き合いしたい", nextId: "dating" },
+    {content: "仕事を依頼したい", nextId: "job_offer" },
+        { content: "エンジニアのキャリアについて相談したい", nextId: "consultant" },
+        { content: "学習コミュニティについて知りたい", nextId: "community" },
+        { content: "お付き合いしたい", nextId: "dating" },
   ],
   子のコンポーネントで、連想配列を扱える
   */
@@ -137,7 +159,7 @@ class App extends React.Component {
     //そのdataset.jsのinitプロパティ（現在の質問ID）での回答を変数に代入
     const initAnswers = initDataset.answers
     this.setState({
-      answers: initAnswers
+          answers: initAnswers
     })
   }
 
@@ -146,7 +168,7 @@ class App extends React.Component {
   initChats = () => {
     const initDataset = this.state.dataset[this.state.currentId]
     const chat = {
-      text: initDataset.question,
+          text: initDataset.question,
       type: 'question'
     }
     const chats = this.state.chats //カラの配列
@@ -154,7 +176,7 @@ class App extends React.Component {
     //[{text:string, type:string}, {~}] の形
 
     this.setState({
-      chats: chats
+          chats: chats
       //this.state.chats.push(chat)では直接chatを変更している
     })
   }
