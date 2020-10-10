@@ -19,7 +19,6 @@ const useStyles = makeStyles(() => (
   })
 ))
 
-
 const Answer = (props) => {
   const classes = useStyles();
   //useStylesの返り値をclassesに入れる
