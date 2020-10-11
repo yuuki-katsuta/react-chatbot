@@ -1,10 +1,10 @@
 import React from 'react';
 import './assets/styles/style.css';
-import defaultDataset from './dataset'
 
 //エントリポイントからimport(名前付きexportに対するimport)
 import { AnswersList, Chats } from './components/index'
 import FormDialog from './components/Forms/FormDialog';
+import { db } from './firebase/index'
 
 class App extends React.Component {
 
@@ -21,7 +21,7 @@ class App extends React.Component {
       //chatは、{text:string, type:string}の連想配列
 
       currentId: "init",　//現在の質問ID
-      dataset: defaultDataset, //デフォルトでdataset.jsの内容が渡ってくる
+      dataset: {}, //デフォルトでdataset.jsの内容が渡ってくる
       open: false,　//問い合わせモーダルの開閉を管理
     }
     this.selectAnswer = this.selectAnswer.bind(this)
@@ -113,12 +113,27 @@ class App extends React.Component {
       open: false
     })
   }
+  initDataset = (dataset) => {
+    this.setState({ dataset: dataset })
+  }
 
   componentDidMount() {
-    const initAnswer = ""
-    this.selectAnswer(initAnswer, this.state.currentId)
-    //this.state.currentIdは初期状態でinit
-    //マウント時（初期状態）では回答していないため、selectedAnswerは空白
+    (async () => {
+      const dataset = this.state.dataset
+      // Fetch questions dataset from Firestore
+      await db.collection('questions').get().then(snapshots => {
+        snapshots.forEach(doc => {
+          const id = doc.id
+          const data = doc.data()
+          dataset[id] = data
+        })
+      })
+      this.initDataset(dataset)
+      const initAnswer = ""
+      this.selectAnswer(initAnswer, this.state.currentId)
+    })()
+
+
   }
 
   componentDidUpdate() {
