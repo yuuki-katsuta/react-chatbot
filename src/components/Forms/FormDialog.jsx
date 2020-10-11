@@ -6,8 +6,6 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextInput from './TextInput';
 
-
-
 export default class FormDialog extends React.Component {
   constructor(props) {
     super(props);
@@ -46,7 +44,7 @@ export default class FormDialog extends React.Component {
         + '【問い合わせ内容】\n' + description
     };
 
-    const url = "https://hooks.slack.com/services/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"
+    const url = "https://hooks.slack.com/services/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"
 
     fetch(url, {
       method: 'POST',

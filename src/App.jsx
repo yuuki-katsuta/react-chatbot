@@ -1,6 +1,5 @@
 import React from 'react';
 import './assets/styles/style.css';
-
 //エントリポイントからimport(名前付きexportに対するimport)
 import { AnswersList, Chats } from './components/index'
 import FormDialog from './components/Forms/FormDialog';
@@ -32,7 +31,6 @@ class App extends React.Component {
 
   //次のクエスチョンを表示する
   displayNextQuestion = (nextQuestionId) => {
-
     const chats = this.state.chats //現在のchats
     chats.push({
       text: this.state.dataset[nextQuestionId].question,
@@ -40,9 +38,7 @@ class App extends React.Component {
     })
 
     this.setState({
-
       //回答コンポーネントに表示するデータとチャットコンポーネントに表示するデータをセットする
-
       //回答コンポーネントに表示するデータ
       answers: this.state.dataset[nextQuestionId].answers,  //nextQuestionIdは最初はinit
       //ここでanswerの配列には、{ content: "仕事を依頼したい", nextId: "job_offer" },のようなデータが入る
@@ -51,11 +47,8 @@ class App extends React.Component {
       chats: chats,
       //chatsは、[{key: value},{key: value}]
       //chatは、{text:string, type:string}の連想配列
-
       currentId: nextQuestionId　//現在の質問ID
     })
-    console.log(chats)
-    console.log(this.state.dataset[nextQuestionId].answers)
   }
 
   //回答したときの処理(回答がchatに追加される)
@@ -132,8 +125,6 @@ class App extends React.Component {
       const initAnswer = ""
       this.selectAnswer(initAnswer, this.state.currentId)
     })()
-
-
   }
 
   componentDidUpdate() {

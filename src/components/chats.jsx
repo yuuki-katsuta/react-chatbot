@@ -4,8 +4,6 @@ import { Chat } from './index'
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 
-
-
 const useStyles = makeStyles(() => (
   createStyles({
     "chats": {
@@ -25,9 +23,7 @@ const Chats = (props) => {
         return <Chat text={chat.text} type={chat.type} key={index.toString()} />
       })}
     </List>
-
   )
 }
 //mapにより、chatには{text:string, type:string}が入ってくる
-
 export default Chats
